@@ -4,6 +4,10 @@ import random
 
 
 def generate_unique_code():
+    """Generates a unique room code after the creation of a new room
+    Returns:
+        string: random unique room code
+    """
     length = 6
 
     while True:
