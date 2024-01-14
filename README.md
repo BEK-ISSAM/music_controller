@@ -46,7 +46,7 @@ Create an environment:
 Install dependencies:
 		pip install -r django-requirements.txt
 IMPORTANT!!! Please follow all the instructions in the next file
-		npm install (everything in package.json will be install in your node-modules folder)
+		npm install (everything in package.json will be installed in your node-modules folder)
 
 Running the App:
 - Run Django migrations:
