@@ -1,4 +1,4 @@
 .node
-node_modules/
+music_controller/frontend/node_modules/
 __pycache__/
 
