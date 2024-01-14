@@ -10,6 +10,7 @@ import {
 import RoomJoinPage from "./RoomJoinPage";
 import CreateRoomPage from "./CreateRoomPage";
 import Room from "./Room";
+import Info from "./Info";
 
 const HomePage = () => {
   const [roomCode, setRoomCode] = useState(null);
@@ -44,6 +45,9 @@ const HomePage = () => {
           <Button color="primary" to="/join" component={Link}>
             Join a Room
           </Button>
+          <Button color="default" to="/info" component={Link}>
+            Info
+          </Button>
           <Button color="secondary" to="/create" component={Link}>
             Create a Room
           </Button>
@@ -62,6 +66,7 @@ const HomePage = () => {
           }
         />
         <Route path="/join" element={<RoomJoinPage />} />
+        <Route path="/info" element={<Info />} />
         <Route path="/create" element={<CreateRoomPage />} />
         <Route
           path="/room/:roomCode"
