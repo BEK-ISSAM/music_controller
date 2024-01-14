@@ -98,7 +98,7 @@ const Room = ({ leaveRoomCallback }) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     };
-    fetch("/api/leave_room/", requestOptions).then((_response) => {
+    fetch("/api/leave_room", requestOptions).then((_response) => {
       leaveRoomCallback();
       navigate("/");
     });
