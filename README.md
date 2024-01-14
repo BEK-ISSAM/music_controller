@@ -4,6 +4,7 @@ Overview:
 This project is a web application that allows users to control music playback. It uses Django for the backend, Django Rest Framework for API endpoints, and React with Babel and Webpack for the frontend.
 
 Features:
+
 User Authentication: through Spotify API.
 Music Control: Users can control music playback, such as play, pause, skip, create, join and vote for skipping.
 Real-time Updates: Changes made by one user are instantly reflected on other users' interfaces.
@@ -11,18 +12,25 @@ RESTful API: Backend exposes RESTful APIs for seamless communication with the fr
 Responsive Design: The frontend is designed to work on various screen sizes.
 
 Technologies Used:
+
 Django: Backend framework for building robust web applications.
+
 Django Rest Framework: Toolkit for building Web APIs in Django.
+
 React: JavaScript library for building user interfaces.
+
 Babel: JavaScript compiler for writing next-generation JavaScript.
+
 Webpack: Module bundler for the frontend.
 
 Getting Started:
+
 - Prerequisites
 	Node.js installed
 	Python and pip (or pipenv) installed
 
 Installation:
+
 - Clone the repository:
 	git clone https://github.com/BEK-ISSAM/music_controller.git
 
