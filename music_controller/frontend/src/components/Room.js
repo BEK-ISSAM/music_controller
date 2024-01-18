@@ -20,7 +20,7 @@ const Room = ({ leaveRoomCallback }) => {
 
   const getRoomDetails = async () => {
     try {
-      const response = await fetch(`/api/get_room?code=${roomCode}`);
+      const response = await fetch(`/api/get_room/?code=${roomCode}`);
       if (!response.ok) {
         leaveRoomCallback();
         navigate("/");
@@ -46,7 +46,7 @@ const Room = ({ leaveRoomCallback }) => {
   useEffect(() => {
     getRoomDetails();
 
-    const interval = setInterval(getCurrentSong, 1000);
+    const interval = setInterval(getCurrentSong, 3000);
     return () => clearInterval(interval);
 
   }, [roomCode, leaveRoomCallback, navigate]);
@@ -98,7 +98,7 @@ const Room = ({ leaveRoomCallback }) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     };
-    fetch("/api/leave_room", requestOptions).then((_response) => {
+    fetch("/api/leave_room/", requestOptions).then((_response) => {
       leaveRoomCallback();
       navigate("/");
     });

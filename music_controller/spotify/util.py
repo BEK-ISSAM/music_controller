@@ -74,31 +74,22 @@ def refresh_spotify_token(session_id):
         session_id, access_token, token_type, expires_in, refresh_token)
 
 
-def execute_spotify_api_request(session_id, endpoint, post_=False, put_=False):
-    """ Fetches the user's spotify data (playlists, songs)
-    Args:
-        session_id (_type_): _description_
-        endpoint (_type_): _description_
-        post_ (bool, optional): _description_. Defaults to False.
-        put_ (bool, optional): _description_. Defaults to False.
-
-    Returns:
-        _type_: _description_
-    """
+def execute_spotify_api_request(session_id, endpoint, post_=False, put_=False, payload=None):
     tokens = get_user_tokens(session_id)
-    headers = {'Content-Type': 'application/json',
-               'Authorization': "Bearer " + tokens.access_token}
+    headers = {'Content-Type': 'application/json', 'Authorization': "Bearer " + tokens.access_token}
 
     if post_:
-        post(BASE_URL + endpoint, headers=headers)
-    if put_:
-        put(BASE_URL + endpoint, headers=headers)
+        response = post(BASE_URL + endpoint, headers=headers, json=payload)
+    elif put_:
+        response = put(BASE_URL + endpoint, headers=headers, json=payload)
+    else:
+        response = get(BASE_URL + endpoint, headers=headers)
 
-    response = get(BASE_URL + endpoint, {}, headers=headers)
     try:
         return response.json()
     except:
         return {'Error': 'Issue with request'}
+
 
 
 def play_song(session_id):
@@ -110,7 +101,10 @@ def play_song(session_id):
     Returns:
         spotify instruction
     """
-    return execute_spotify_api_request(session_id, "player/play", put_=True)
+    payload = {"is_playing": True}  # Add payload parameters as needed
+    response = execute_spotify_api_request(session_id, "player/play", put_=True, payload=payload)
+    print("Play Song API Response:", response)
+    return response
 
 
 def pause_song(session_id):
@@ -122,7 +116,10 @@ def pause_song(session_id):
     Returns:
         Spotify instruction
     """
-    return execute_spotify_api_request(session_id, "player/pause", put_=True)
+    payload = {"is_playing": False}  # Add payload parameters as needed
+    response = execute_spotify_api_request(session_id, "player/pause", put_=True, payload=payload)
+    print("Pausing Song API Response:", response)
+    return response
 
 
 def skip_song(session_id):

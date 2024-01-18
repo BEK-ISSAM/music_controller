@@ -77,7 +77,7 @@ class CurrentSong(APIView):
         progress = response.get('progress_ms')
         album_cover = item.get('album').get('images')[0].get('url')
         is_playing = response.get('is_playing')
-        song_id = item.get('id')
+        song_id = response.get('id')
 
         artist_string = ""
 
