@@ -131,4 +131,5 @@ def skip_song(session_id):
     Returns:
         Spotify instruction
     """
-    return execute_spotify_api_request(session_id, "player/next", post_=True)
+    payload = {}  # Empty payload
+    return execute_spotify_api_request(session_id, "player/next", post_=True, payload=payload)

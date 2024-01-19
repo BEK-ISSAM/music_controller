@@ -110,6 +110,7 @@ class CurrentSong(APIView):
         if current_song != song_id:
             room.current_song = song_id
             room.save(update_fields=['current_song'])
+            # Delete votes for the previous songs and update them with new votes
             votes = Vote.objects.filter(room=room).delete()
 
 
@@ -137,17 +138,22 @@ class PlaySong(APIView):
 
 class SkipSong(APIView):
     def post(self, request, format=None):
-        room_code = self.request.session.get('room_code')
-        room = Room.objects.filter(code=room_code)[0]
-        votes = Vote.objects.filter(room=room, song_id=room.current_song)
-        votes_needed = room.votes_to_skip
+        try:
+            room_code = self.request.session.get('room_code')
+            room = Room.objects.get(code=room_code)
+            votes = Vote.objects.filter(room=room, song_id=room.current_song)
+            votes_needed = room.votes_to_skip
 
-        if self.request.session.session_key == room.host or len(votes) + 1 >= votes_needed:
-            votes.delete()
-            skip_song(room.host)
-        else:
-            vote = Vote(user=self.request.session.session_key,
-                        room=room, song_id=room.current_song)
-            vote.save()
+            if self.request.session.session_key == room.host or len(votes) + 1 >= votes_needed:
+                votes.delete()
+                skip_song(room.host)
+            elif room.current_song is not None:
+                # Include song_id when creating a new Vote
+                current_song_id = room.current_song
+                vote = Vote(user=self.request.session.session_key, room=room, song_id=current_song_id)
+                vote.save()
 
-        return Response({}, status.HTTP_204_NO_CONTENT)
+            return Response({}, status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            print(f"Error skipping song: {str(e)}")
+            return Response({"error": "Internal Server Error"}, status.HTTP_500_INTERNAL_SERVER_ERROR)

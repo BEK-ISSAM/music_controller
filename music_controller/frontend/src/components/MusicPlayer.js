@@ -89,7 +89,8 @@ const MusicPlayer = (props) => {
               {is_playing ? <PauseIcon /> : <PlayArrowIcon />}
             </IconButton>
             <IconButton onClick={() => {skipSong()}}>
-              <SkipNextIcon />
+            {props.votes} /{" "}{props.votes_required}
+            <SkipNextIcon />
             </IconButton>
           </div>
         </Grid>
